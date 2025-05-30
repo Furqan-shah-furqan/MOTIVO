@@ -49,7 +49,7 @@ Container myContainer(width, value, txtsize, onTap, BuildContext context) {
                   },
                   icon: Icon(
                     Icons.favorite,
-                    color: fav.isFavorite ? Colors.grey[600] : Colors.red,
+                    color: fav.isFavorite ? Colors.red : Colors.grey[600],
                   ),
                 ),
                 MaterialButton(

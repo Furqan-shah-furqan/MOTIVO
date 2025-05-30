@@ -24,14 +24,15 @@ class ThemeProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  bool isFavorite = true;
-  toggleFavButton() {
+  bool isFavorite = false;
+
+  void toggleFavButton() {
     isFavorite = !isFavorite;
     notifyListeners();
   }
 
   resetFavButton() {
-    isFavorite = true;
+    isFavorite = false;
     notifyListeners();
   }
 

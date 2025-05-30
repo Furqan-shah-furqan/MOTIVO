@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:motivo/Service/quote_service.dart';
+import 'package:motivo/Theme/theme_provider.dart';
 import 'package:provider/provider.dart';
 import '../Components/my_components.dart';
 import '../Service/utility.dart';
@@ -13,30 +14,33 @@ class Discipline extends StatelessWidget {
     double w = ScreenSize.width(context);
     double h = ScreenSize.height(context);
 
-        WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<QuoteService>(context, listen: false).getDisciplineQuote();
     });
 
     return Scaffold(
       backgroundColor: mainColor,
       body: Consumer<QuoteService>(
-        builder: (context, value, child) {
+        builder: (context, quotevalue, child) {
           return Center(
             child: Column(
               children: [
                 SizedBox(height: h * 0.2),
-                Text(
-                  'DISCIPLINE QUOTES',
-                  style: textStyle2,
-                ),
+                Text('DISCIPLINE QUOTES', style: textStyle2),
                 SizedBox(height: h * 0.1),
-                myContainer(
-                  w * 0.8,
-                  value.quotes.toUpperCase(),
-                  w > 500 ? w * 0.028 : w * 0.045,
-                  () {
-                    value.getDisciplineQuote();
-                  },context
+                Consumer<ThemeProvider>(
+                  builder: (context, themevalue, child) {
+                    return myContainer(
+                      w * 0.8,
+                      quotevalue.quotes.toUpperCase(),
+                      w > 500 ? w * 0.028 : w * 0.045,
+                      () {
+                        quotevalue.getDisciplineQuote();
+                        themevalue.resetFavButton();
+                      },
+                      context,
+                    );
+                  },
                 ),
               ],
             ),

@@ -87,7 +87,7 @@ class NewHome extends StatelessWidget {
                 ),
               ),
               trailing: CupertinoSwitch(
-                thumbColor: Theme.of(context).colorScheme.inversePrimary,
+                thumbColor: Theme.of(context).colorScheme.background,
                 activeColor: Theme.of(context).colorScheme.tertiary,
                 value: themeProvider.themeData.brightness == Brightness.dark,
                 onChanged: (value) {

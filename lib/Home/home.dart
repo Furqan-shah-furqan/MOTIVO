@@ -10,19 +10,20 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final quoteservice = Provider.of<QuoteService>(context, listen: false);
     // Colror
     Color mainColor = ColorScheme.of(context).background;
     // screenWidth.
     double w = ScreenSize.width(context);
     double h = ScreenSize.height(context);
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      Provider.of<QuoteService>(context, listen: false).getRandomQuote();
+      quoteservice.getRandomQuote();
     });
     return Scaffold(
       backgroundColor: mainColor,
       body: Center(
         child: Consumer<QuoteService>(
-          builder: (context, value, child) {
+          builder: (context, quotevalue, child) {
             return Column(
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.center,
@@ -30,18 +31,19 @@ class Home extends StatelessWidget {
                 SizedBox(height: h * 0.2),
                 Text('QUOTE OF THE DAY.', style: textStyle2),
                 SizedBox(height: h * 0.1),
-                myContainer(
-                  w * 0.8,
-                  value.quotes.toUpperCase(),
-                  w > 500 ? w * 0.028 : w * 0.045,
-                  () {
-                    value.getRandomQuote();
-                    Provider.of<ThemeProvider>(
+                Consumer<ThemeProvider>(
+                  builder: (context, themevalue, child) {
+                    return myContainer(
+                      w * 0.8,
+                      quotevalue.quotes.toUpperCase(),
+                      w > 500 ? w * 0.028 : w * 0.045,
+                      () {
+                        quotevalue.getRandomQuote();
+                        themevalue.resetFavButton();
+                      },
                       context,
-                      listen: false,
-                    ).resetFavButton();
+                    );
                   },
-                  context,
                 ),
               ],
             );
